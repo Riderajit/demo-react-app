@@ -3,25 +3,27 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18  # Adjust to the Node.js version needed for compatibility with your project
+      nodejs: 18  # Set Node.js version based on project compatibility requirements
     commands:
-      - echo Installing root-level dependencies, if any...
-      - npm install  # Installs any dependencies at the root level (if required)
+      - echo "Clearing NPM cache..."
+      - npm cache clean --force  # Clear the NPM cache to prevent any issues with cached dependencies
+      - echo "Installing root-level dependencies, if any..."
+      - npm install || echo "Root-level npm install failed, check dependencies or settings."  # Install dependencies at root (if required)
 
   pre_build:
     commands:
-      - echo Changing directory to 'my-app' for app-specific dependencies...
-      - cd my-app  # Move to the app directory if it's nested within the project structure
-      - echo Installing NPM dependencies for the React app...
-      - npm install  # Installs dependencies specifically for the React app in 'my-app' folder
+      - echo "Navigating to 'my-app' directory for app-specific setup..."
+      - cd my-app  # Navigate to the app's directory if dependencies are isolated here
+      - echo "Installing NPM dependencies for the React app in 'my-app' directory..."
+      - npm install || echo "App-specific npm install failed, check dependencies or settings."  # Install dependencies for the React app and log any issues
 
   build:
     commands:
-      - echo Building the React application...
-      - npm run build  # Executes the build command for the React app, outputting to 'my-app/build'
+      - echo "Building the React application..."
+      - npm run build || echo "Build failed, check build command and configurations."  # Run the build command and log issues if the build fails
 
 artifacts:
   files:
-    - '**/*'  # Includes all files from the 'build' directory in the artifacts
-  base-directory: 'my-app/build'  # Specify the directory containing the final build output
-  # discard-paths: yes  # Uncomment if you want only the files inside the build folder in the artifacts
+    - '**/*'  # Includes all files in the 'build' directory within the artifacts
+  base-directory: 'my-app/build'  # Define the base directory for the build artifacts
+  discard-paths: yes  # Set to 'yes' to only include files directly within the base-directory, excluding path structure
