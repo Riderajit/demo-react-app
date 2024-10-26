@@ -3,25 +3,25 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18
+      nodejs: 18  # Adjust to the Node.js version needed for compatibility with your project
     commands:
-      - echo Installing NPM dependencies in project root...
-      - npm install  # Installs dependencies in the project root if necessary
+      - echo Installing root-level dependencies, if any...
+      - npm install  # Installs any dependencies at the root level (if required)
 
   pre_build:
     commands:
-      - echo Changing directory to 'my-app'...
-      - cd my-app  # Change to the React app directory
+      - echo Changing directory to 'my-app' for app-specific dependencies...
+      - cd my-app  # Move to the app directory if it's nested within the project structure
       - echo Installing NPM dependencies for the React app...
-      - npm install  # Installs dependencies specific to the React app
+      - npm install  # Installs dependencies specifically for the React app in 'my-app' folder
 
   build:
     commands:
-      - echo Build started on $(date)
-      - npm run build  # Creates the build output in 'my-app/build'
+      - echo Building the React application...
+      - npm run build  # Executes the build command for the React app, outputting to 'my-app/build'
 
 artifacts:
   files:
-    - '**/*'  # Collect all files in the build directory
-  base-directory: 'my-app/build'  # Points to the build output folder
-  # discard-paths: yes  # Uncomment if you want to flatten the directory structure in artifacts
+    - '**/*'  # Includes all files from the 'build' directory in the artifacts
+  base-directory: 'my-app/build'  # Specify the directory containing the final build output
+  # discard-paths: yes  # Uncomment if you want only the files inside the build folder in the artifacts
