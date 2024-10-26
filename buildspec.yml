@@ -6,22 +6,22 @@ phases:
       nodejs: 18
     commands:
       - echo Installing NPM dependencies in project root...
-      - npm install  # This should be run in the project root if needed
+      - npm install  # Installs dependencies in the project root if necessary
 
   pre_build:
     commands:
       - echo Changing directory to 'my-app'...
-      - cd my-app  # Ensure you're in the right directory
+      - cd my-app  # Change to the React app directory
       - echo Installing NPM dependencies for the React app...
-      - npm install  # This installs dependencies specific to the React app
+      - npm install  # Installs dependencies specific to the React app
 
   build:
     commands:
-      - echo Build started on 'date'
-      - npm run build  # This will create the build in 'my-app/build'
+      - echo Build started on $(date)
+      - npm run build  # Creates the build output in 'my-app/build'
 
 artifacts:
   files:
-    - '**/*'  # This will collect all files from the build folder
-  base-directory: 'my-app/build'  # Specify the correct path to your build folder
-  # discard-paths: yes  # Uncomment this line if you want to remove the base directory from paths in the artifact
+    - '**/*'  # Collect all files in the build directory
+  base-directory: 'my-app/build'  # Points to the build output folder
+  # discard-paths: yes  # Uncomment if you want to flatten the directory structure in artifacts
