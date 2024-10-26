@@ -4,19 +4,24 @@ phases:
   install:
     runtime-versions:
       nodejs: 18
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install  # This should be run in the project root, not inside 'my-app'
+
   pre_build:
     commands:
-      - cd my-app
-      - echo Installing source NPM dependencies...
+      - echo Changing directory to 'my-app'...
+      - cd my-app  # Ensure you're in the right directory
+      - echo Installing NPM dependencies...
       - npm install
+
   build:
     commands:
       - echo Build started on 'date'
-      - npm run build
+      - npm run build  # This will create the build in 'my-app/build'
 
 artifacts:
   files:
-    - '**/*'
-    #- "my-app/build/**/*"
-  base-directory: 'my-app/build'
-  #discard-paths: yes
+    - '**/*'  # This will collect all files from the build folder
+  base-directory: 'my-app/build'  # Specify the correct path to your build folder
+  # discard-paths: yes  # Uncomment this line if you want to remove the base directory from paths in the artifact
