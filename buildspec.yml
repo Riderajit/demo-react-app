@@ -5,15 +5,15 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - echo Installing source NPM dependencies...
-      - npm install  # This should be run in the project root, not inside 'my-app'
+      - echo Installing NPM dependencies in project root...
+      - npm install  # This should be run in the project root if needed
 
   pre_build:
     commands:
       - echo Changing directory to 'my-app'...
       - cd my-app  # Ensure you're in the right directory
-      - echo Installing NPM dependencies...
-      - npm install
+      - echo Installing NPM dependencies for the React app...
+      - npm install  # This installs dependencies specific to the React app
 
   build:
     commands:
